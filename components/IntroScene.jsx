@@ -9,7 +9,7 @@ export default function IntroScene({ onFinish }) {
       <h1 className="text-4xl font-bold mb-4 text-center">Simulador Político</h1>
       <div className="w-full max-w-2xl">
         <Image
-          src="/pedro-escritorio.png"
+          src="/pedro-escena1.png"
           alt="Pedro tras el escritorio"
           width={800}
           height={600}
