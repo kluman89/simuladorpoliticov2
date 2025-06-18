@@ -1,41 +1,41 @@
-import { useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
-export default function IntroScene({ onFinish }) {
-  const [showChoices, setShowChoices] = useState(false);
+export default function IntroScene() {
+  const [showScene, setShowScene] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setShowScene(true), 500);
+    const audio = new Audio('/phone-ring.mp3');
+    audio.play();
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center px-4 py-10">
-      <div className="w-full max-w-2xl">
-        <Image
+      <div
+        className={`transition-transform duration-1000 ease-out transform ${
+          showScene ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
+        }`}
+      >
+        <img
           src="/pedro.png"
           alt="Pedro tras el escritorio"
-          width={800}
-          height={600}
-          className="rounded shadow mb-6"
+          className="rounded shadow-lg w-full max-w-xl"
         />
-        <div className="bg-black bg-opacity-40 p-4 rounded text-lg leading-relaxed">
-          <p>España ha hablado. Has ganado las elecciones, pero no tienes mayoría.</p>
-          <p className="mt-2">El país te observa. La prensa cuchichea. Europa espera.</p>
-          <p className="mt-2 font-semibold">Y solo tienes el teléfono rojo sobre tu escritorio.</p>
-        </div>
-
-        {!showChoices ? (
-          <button
-            className="mt-6 bg-blue-500 px-6 py-2 rounded shadow"
-            onClick={() => setShowChoices(true)}
-          >
-            📞 Responder llamada
-          </button>
-        ) : (
-          <div className="flex flex-col gap-3 mt-6">
-            <button className="bg-yellow-600 px-4 py-2 rounded">📞 Llamar a Buildú</button>
-            <button className="bg-pink-600 px-4 py-2 rounded">📞 Llamar a Yolundia</button>
-            <button className="bg-blue-700 px-4 py-2 rounded">📞 Llamar a Feijasco</button>
-            <button className="bg-purple-700 px-4 py-2 rounded">📡 Pactar con una IA</button>
-          </div>
-        )}
       </div>
+
+      <div className="bg-black bg-opacity-60 p-6 rounded text-lg leading-relaxed max-w-xl text-center mt-8 animate-fade-in">
+        <p>España ha hablado. Has ganado las elecciones, pero no tienes mayoría.</p>
+        <p className="mt-2">El país te observa. La prensa cuchichea. Europa espera.</p>
+        <p className="mt-4 font-semibold">Y solo tienes el teléfono rojo sobre tu escritorio.</p>
+      </div>
+
+      <button
+        className="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded flex items-center gap-2 animate-bounce"
+        onClick={() => alert('Has respondido la llamada. Que empiece el juego...')}
+      >
+        📞 Responder llamada
+      </button>
     </div>
   );
 }
